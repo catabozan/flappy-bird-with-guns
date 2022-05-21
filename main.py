@@ -1,3 +1,4 @@
+# OLD GAME: https://pastebin.pl/view/6a5325c7
 import pygame
 
 # CONSTANTS
