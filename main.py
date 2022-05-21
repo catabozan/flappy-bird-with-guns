@@ -1,43 +1,36 @@
-import sys
 import pygame
+
+# CONSTANTS
+DISPLAY_WIDTH = 1400
+DISPLAY_HEIGHT = 1050
 
 pygame.init()
 
+window = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
 
-size = width, height = 320, 240
+bg = pygame.image.load("flappy_bg.png")
 
-speed = [2, 2]
+y = 100
+vy = 0
 
-black = 0, 0, 0
+clock = pygame.time.Clock()
 
+while True:
+    clock.tick(30)
 
-screen = pygame.display.set_mode(size)
-
-
-ball = pygame.image.load("intro_ball.gif")
-
-ballrect = ball.get_rect()
-
-
-while 1:
+    window.blit(bg, (0, 0))
 
     for event in pygame.event.get():
-
         if event.type == pygame.QUIT:
-            sys.exit()
+            quit()
 
-    ballrect = ballrect.move(speed)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                vy = -20
 
-    if ballrect.left < 0 or ballrect.right > width:
+    y = y + vy
+    vy = vy + 1
 
-        speed[0] = -speed[0]
+    pygame.draw.rect(window, (255, 255, 255), (100, y, 50, 50))
 
-    if ballrect.top < 0 or ballrect.bottom > height:
-
-        speed[1] = -speed[1]
-
-    screen.fill(black)
-
-    screen.blit(ball, ballrect)
-
-    pygame.display.flip()
+    pygame.display.update()
