@@ -10,9 +10,14 @@ pygame.init()
 window = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
 
 bg = pygame.image.load("flappy_bg.png")
+bird = pygame.image.load("bird_with_gun.png")
+bird = pygame.transform.scale(bird, (150, 150))
 
 y = 100
 vy = 0
+
+x = 100
+vx = 0
 
 clock = pygame.time.Clock()
 
@@ -26,12 +31,24 @@ while True:
             quit()
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_w:
                 vy = -20
+
+            if event.key == pygame.K_a:
+                vx = -5
+
+            if event.key == pygame.K_d:
+                vx = 5
 
     y = y + vy
     vy = vy + 1
 
-    pygame.draw.rect(window, (255, 255, 255), (100, y, 50, 50))
+    x = x + vx
+    if vx < 0:
+        vx = vx + 1
+    if vx > 0:
+        vx = vx - 1
+
+    window.blit(bird, (x, y))
 
     pygame.display.update()
