@@ -10,7 +10,7 @@ def collide(image1, x1, y1, image2, x2, y2):
 
 
 class Player:
-    Y_ACCELERATION = 10
+    Y_ACCELERATION = 13
     X_ACCELERATION = 10
     y = 100
     vy = 0
@@ -32,7 +32,8 @@ class Player:
 
     def update(self, window):
         # Move vertically
-        self.y = self.y + self.vy
+        if self.y + self.vy > 0 and self.y + self.vy < window.get_height():
+            self.y = self.y + self.vy
         self.vy = self.vy + 1
 
         # Move horizontally

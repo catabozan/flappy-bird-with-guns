@@ -9,7 +9,7 @@ class Game:
     CLOCK = pygame.time.Clock()
     FPS = 30
     PIPE_SPRITE = pygame.image.load("assets/pipe.png")
-    PIPE_EVERY_SECONDS = 2
+    SECONDS_BETWEEN_PIPES = 3
     frames_since_last_pipe = 0
     pipes = []
 
@@ -30,7 +30,7 @@ class Game:
             if event.type == pygame.QUIT:
                 quit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_w:
+                if event.key == pygame.K_w or event.key == pygame.K_SPACE:
                     self.player.jump()
 
         # Keys pressed
@@ -46,9 +46,14 @@ class Game:
 
         # Creating pipes
         self.frames_since_last_pipe += 1
-        if self.frames_since_last_pipe > self.FPS * self.PIPE_EVERY_SECONDS:
+        if self.frames_since_last_pipe > self.FPS * self.SECONDS_BETWEEN_PIPES:
             self.createPipe()
             self.frames_since_last_pipe = 0
+
+        # Deleting pipes
+        for pipe in self.pipes:
+            if pipe.x < -300:
+                self.pipes.remove(pipe)
 
     def createPipe(self):
         pipe = Pipe(self.PIPE_SPRITE, self.W_WIDTH)
