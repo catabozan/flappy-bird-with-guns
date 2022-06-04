@@ -38,6 +38,14 @@ class Game:
         if keys[pygame.K_d]:
             self.player.moveRight()
 
+        # Collisions
+        if self.player.touchesPipes(self.pipes):
+            self.reset()
+
     def createPipe(self):
         pipe = Pipe(self.PIPE_SPRITE, self.W_WIDTH)
         self.pipes.append(pipe)
+
+    def reset(self):
+        self.pipes = []
+        self.player.reset()

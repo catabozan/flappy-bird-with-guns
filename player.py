@@ -1,6 +1,14 @@
 import pygame
 
 
+def collide(image1, x1, y1, image2, x2, y2):
+    x = x2 - x1
+    y = y2 - y1
+    mask1 = pygame.mask.from_surface(image1)
+    mask2 = pygame.mask.from_surface(image2)
+    return mask1.overlap(mask2, (x, y)) != None
+
+
 class Player:
     Y_ACCELERATION = 10
     X_ACCELERATION = 10
@@ -36,3 +44,16 @@ class Player:
 
         # Draw player
         window.blit(self.sprite, (self.x, self.y))
+
+    def touchesPipes(self, pipes):
+        for pipe in pipes:
+            if collide(self.sprite, self.x, self.y, pipe.sprite, pipe.x, pipe.y):
+                return True
+
+        return False
+
+    def reset(self):
+        self.x = 100
+        self.y = 100
+        self.vx = 0
+        self.vy = 0
