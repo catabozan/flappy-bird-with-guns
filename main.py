@@ -9,7 +9,6 @@ player = Player()
 game = Game(player)
 
 while True:
-
     game.update()
 
     pygame.display.update()

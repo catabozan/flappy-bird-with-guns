@@ -7,8 +7,10 @@ class Game:
     W_HEIGHT = 1050
     W_BG = pygame.image.load("assets/redbg.jpeg")
     CLOCK = pygame.time.Clock()
+    FPS = 30
     PIPE_SPRITE = pygame.image.load("assets/pipe.png")
-    PIPES_PER_SECOND = 1.0
+    PIPE_EVERY_SECONDS = 2
+    frames_since_last_pipe = 0
     pipes = []
 
     def __init__(self, player):
@@ -17,7 +19,7 @@ class Game:
         self.createPipe()
 
     def update(self):
-        self.CLOCK.tick(30)
+        self.CLOCK.tick(self.FPS)
         self.window.blit(self.W_BG, (0, 0))
         self.player.update(self.window)
         for pipe in self.pipes:
@@ -41,6 +43,12 @@ class Game:
         # Collisions
         if self.player.touchesPipes(self.pipes):
             self.reset()
+
+        # Creating pipes
+        self.frames_since_last_pipe += 1
+        if self.frames_since_last_pipe > self.FPS * self.PIPE_EVERY_SECONDS:
+            self.createPipe()
+            self.frames_since_last_pipe = 0
 
     def createPipe(self):
         pipe = Pipe(self.PIPE_SPRITE, self.W_WIDTH)
