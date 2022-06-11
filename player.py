@@ -43,6 +43,8 @@ class Player:
         if self.vx > 0:
             self.vx = self.vx - 1
 
+        pygame.transform.rotate(self.sprite, self.vy)
+
         # Draw player
         window.blit(self.sprite, (self.x, self.y))
 
